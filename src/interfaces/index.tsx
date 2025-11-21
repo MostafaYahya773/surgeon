@@ -236,8 +236,7 @@ export interface Auth {
   type?: string;
   label?: string;
   name?: string;
-  email: string;
-  password: string;
+  email?: string;
   phone?: string;
   date_of_birth?: string;
   specialization?: string;

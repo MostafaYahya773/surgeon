@@ -26,10 +26,9 @@ export default function Setting() {
       email: userData?.[0]?.email || '',
       specialization: userData?.[0]?.specialization || '',
       phone: userData?.[0]?.phone || '',
-      //   image_url: userData?.[0]?.image_url || '',
       date_of_birth: userData?.[0]?.date_of_birth || '',
     },
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values) => {
       handleEdit(userData?.[0]?.id, values, setIsView);
     },
     enableReinitialize: true,
