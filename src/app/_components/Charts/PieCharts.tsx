@@ -7,11 +7,11 @@ import {
   Cell,
   Tooltip,
   ResponsiveContainer,
-} from '../Charts/RechartsWrapper'; // خليه زي ما هو عندك
+} from './RechartsWrapper'; // خليه زي ما هو عندك
 import { PieChartProps } from '../../../interfaces/index';
 import { useInView } from 'react-intersection-observer';
 
-const PieChart: React.FC<PieChartProps> = React.memo(
+const PieCharts: React.FC<PieChartProps> = React.memo(
   ({ data, colors = ['#60a5fa', '#facc15'], showTooltip = true }) => {
     const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.5 });
 
@@ -78,4 +78,4 @@ const PieChart: React.FC<PieChartProps> = React.memo(
 
 PieChart.displayName = 'PieChart';
 
-export default PieChart;
+export default PieCharts;

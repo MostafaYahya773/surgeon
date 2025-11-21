@@ -26,7 +26,7 @@ const CalenderUI = dynamic(() => import('../Calender/Calender'), {
   ssr: false,
   loading: () => <LoadingAnimation />,
 });
-const PioCharts = dynamic(() => import('../Charts/PieChart'), {
+const PioCharts = dynamic(() => import('../Charts/PieCharts'), {
   ssr: false,
   loading: () => <LoadingAnimation />,
 });
