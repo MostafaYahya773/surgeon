@@ -12,7 +12,7 @@ export function useConfirmEmail() {
 
   const sendReset = async ({ email }: ResetEmailValues) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:3000/auth/ResetPassword',
+      redirectTo: 'https://surgeon-woad.vercel.app/auth/ResetPassword',
     });
 
     if (error) throw new Error(error.message);
