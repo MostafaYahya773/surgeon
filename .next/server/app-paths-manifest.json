@@ -1,0 +1,7 @@
+{
+  "/auth/Login/page": "app/auth/Login/page.js",
+  "/auth/ConfirmEmail/page": "app/auth/ConfirmEmail/page.js",
+  "/auth/ResetPassword/page": "app/auth/ResetPassword/page.js",
+  "/home/page": "app/home/page.js",
+  "/home/Setting/page": "app/home/Setting/page.js"
+}
