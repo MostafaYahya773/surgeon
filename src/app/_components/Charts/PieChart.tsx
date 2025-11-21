@@ -7,7 +7,7 @@ import {
   Cell,
   Tooltip,
   ResponsiveContainer,
-} from '../Charts/RechartsWrapper';
+} from '../Charts/RechartsWrapper'; // خليه زي ما هو عندك
 import { PieChartProps } from '../../../interfaces/index';
 import { useInView } from 'react-intersection-observer';
 
@@ -23,7 +23,7 @@ const PieChart: React.FC<PieChartProps> = React.memo(
       <div ref={ref} className="grid grid-cols-1 h-full">
         {inView && (
           <div className="w-full relative grid grid-rows-[1fr_auto] gap-2">
-            {/* الشارت الرئيسي */}
+            {/* الـ ResponsiveContainer عنده طفل واحد بس → PieChart */}
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -41,13 +41,11 @@ const PieChart: React.FC<PieChartProps> = React.memo(
                     <Cell key={`cell-${i}`} fill={colors[i % colors.length]} />
                   ))}
                 </Pie>
-
-                {/* Tooltip لازم يكون جوا PieChart */}
                 {showTooltip && <Tooltip />}
               </PieChart>
             </ResponsiveContainer>
 
-            {/* Overlay: Total Patients في النص فوق الدونات */}
+            {/* Total Patients في النص */}
             <div className="absolute inset-0 flex flex-col items-center justify-center font-medium text-center text-[15px] gap-2 pointer-events-none z-10">
               <span className="text-secondary/50 dark:text-slate-400">
                 Total Patients
@@ -78,6 +76,6 @@ const PieChart: React.FC<PieChartProps> = React.memo(
   }
 );
 
-PieCharts.displayName = 'PieCharts';
+PieChart.displayName = 'PieChart';
 
 export default PieChart;
