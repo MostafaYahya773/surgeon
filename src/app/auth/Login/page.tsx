@@ -134,6 +134,16 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <div className="bg-white dark:bg-slate-700 w-fit mx-auto mt-5 h-fit p-2 rounded-lg">
+        <p>
+          DemoEmail :
+          <span className="text-secondary text-[14px]">test123@gmail.com</span>
+        </p>
+        <p>
+          Password :
+          <span className="text-secondary text-[14px]">Test12345</span>
+        </p>
+      </div>
     </div>
   );
 }
