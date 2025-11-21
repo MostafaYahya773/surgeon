@@ -25,21 +25,23 @@ const PieCharts = React.memo(
             <div className="w-full relative grid grid-rows-[1fr_auto] gap-2">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie
-                    data={data as any[]}
-                    dataKey="value"
-                    nameKey="name"
-                    innerRadius={70}
-                    outerRadius={85}
-                    cornerRadius={5}
-                    paddingAngle={3}
-                    label={false}
-                    stroke="none"
-                  >
-                    {data.map((_, i) => (
-                      <Cell key={i} fill={colors[i % colors.length]} />
-                    ))}
-                  </Pie>
+                  <>
+                    <Pie
+                      data={data as any[]}
+                      dataKey="value"
+                      nameKey="name"
+                      innerRadius={70}
+                      outerRadius={85}
+                      cornerRadius={5}
+                      paddingAngle={3}
+                      label={false}
+                      stroke="none"
+                    >
+                      {data.map((_, i) => (
+                        <Cell key={i} fill={colors[i % colors.length]} />
+                      ))}
+                    </Pie>
+                  </>
                   {showTooltip && <Tooltip />}
                 </PieChart>
                 <div className="absolute inset-0 text-[15px] flex flex-col gap-2 justify-center items-center font-medium ">
