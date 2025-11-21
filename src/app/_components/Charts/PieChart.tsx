@@ -11,7 +11,7 @@ import {
 import { PieChartProps } from '../../../interfaces/index';
 import { useInView } from 'react-intersection-observer';
 
-const PieCharts: React.FC<PieChartProps> = React.memo(
+const PieChart: React.FC<PieChartProps> = React.memo(
   ({ data, colors = ['#60a5fa', '#facc15'], showTooltip = true }) => {
     const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.5 });
 
@@ -80,4 +80,4 @@ const PieCharts: React.FC<PieChartProps> = React.memo(
 
 PieCharts.displayName = 'PieCharts';
 
-export default PieCharts;
+export default PieChart;
