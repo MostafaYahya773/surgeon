@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import {
   PieChart,
@@ -22,8 +23,8 @@ const PieCharts: React.FC<PieChartProps> = React.memo(
       <div ref={ref} className="grid grid-cols-1 h-full">
         {inView && (
           <div className="w-full relative grid grid-rows-[1fr_auto] gap-2">
+            {/* الشارت الرئيسي */}
             <ResponsiveContainer width="100%" height="100%">
-              {/* PieChart accepts only direct children, no Fragment */}
               <PieChart>
                 <Pie
                   data={data as any[]}
@@ -37,32 +38,36 @@ const PieCharts: React.FC<PieChartProps> = React.memo(
                   stroke="none"
                 >
                   {data.map((_, i) => (
-                    <Cell key={i} fill={colors[i % colors.length]} />
+                    <Cell key={`cell-${i}`} fill={colors[i % colors.length]} />
                   ))}
                 </Pie>
+
+                {/* Tooltip لازم يكون جوا PieChart */}
+                {showTooltip && <Tooltip />}
               </PieChart>
-
-              {/* Tooltip placed outside PieChart */}
-              {showTooltip && <Tooltip />}
-
-              {/* Overlay div */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center font-medium text-center text-[15px] gap-2">
-                <span className="text-secondary/50 dark:text-slate-400">
-                  Total Patients
-                </span>
-                <span className="text-[25px] dark:text-white">{total}</span>
-              </div>
             </ResponsiveContainer>
 
-            {/* Legend */}
-            <div className="selectType w-full flex justify-center items-center gap-7 mt-2">
+            {/* Overlay: Total Patients في النص فوق الدونات */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center font-medium text-center text-[15px] gap-2 pointer-events-none z-10">
+              <span className="text-secondary/50 dark:text-slate-400">
+                Total Patients
+              </span>
+              <span className="text-[25px] font-bold dark:text-white">
+                {total.toLocaleString()}
+              </span>
+            </div>
+
+            {/* Legend تحت الشارت */}
+            <div className="w-full flex justify-center items-center gap-7 mt-4 flex-wrap">
               {data.map((item, i) => (
-                <div key={i} className="flex items-center gap-1">
+                <div key={i} className="flex items-center gap-2">
                   <span
-                    className="text-[15px] w-8 h-3 rounded-md"
+                    className="w-8 h-3 rounded-md inline-block"
                     style={{ backgroundColor: colors[i % colors.length] }}
                   />
-                  <p className="text-[15px] text-secondary/70">{item.name}</p>
+                  <p className="text-[15px] text-secondary/70 dark:text-gray-300">
+                    {item.name}
+                  </p>
                 </div>
               ))}
             </div>
@@ -72,5 +77,7 @@ const PieCharts: React.FC<PieChartProps> = React.memo(
     );
   }
 );
+
+PieCharts.displayName = 'PieCharts';
 
 export default PieCharts;
