@@ -54,7 +54,10 @@ export default function ManualReport() {
         <CustomDetails setIsView={setIsView} />
       </div>
 
-      <ManualRebortTable setIsView={setIsView} paitentReports={FilterByName} />
+      <ManualRebortTable
+        setIsView={setIsView}
+        paitentReports={FilterByName || []}
+      />
     </section>
   );
 }
