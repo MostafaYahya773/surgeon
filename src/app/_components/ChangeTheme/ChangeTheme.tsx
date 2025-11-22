@@ -17,7 +17,7 @@ const ChangeTheme: React.FC = () => {
   return (
     <div className="dark:bg-slate-800 rounded-md bg-white py-3 px-2 text-[14px] flex justify-between item-center">
         <h3 className="dark:text-white">Dark Mode</h3>
-        <label htmlFor="toggle" className={`dark:bg-slate-600 bg-slate-300 w-10 h-4 rounded-full relative cursor-pointer  ${isDark ? 'before:bg-blue-400': 'before:bg-slate-600'}  before:absolute  before:w-4 before:h-4 before:rounded-full ${isDark ? "before:right-0 " : "before:left-0"} `}></label>
+        <label htmlFor="toggle" className={`dark:bg-slate-600 bg-slate-300 w-10 h-4 rounded-full relative cursor-pointer  ${isDark ? 'before:bg-blue-400': 'before:bg-slate-800'}  before:absolute  before:w-4 before:h-4 before:rounded-full ${isDark ? "before:right-0 " : "before:left-0"} `}></label>
         <input 
           id="toggle"
           type="checkbox"
