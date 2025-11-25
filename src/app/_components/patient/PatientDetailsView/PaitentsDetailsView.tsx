@@ -2,12 +2,56 @@
 import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '@/context/global';
 import { useSelectDataById } from '@/hooks/useSelectDataById';
+import { Printer } from 'lucide-react';
+import { useRef } from 'react';
 export default function PaitentsDetailsView() {
   const { id, endpoint, setEndpoint } = useContext(GlobalContext);
-  const { data, isLoading } = useSelectDataById(id, endpoint);
+  const { data } = useSelectDataById(id, endpoint);
+  const printRef = useRef<HTMLDivElement>(null);
+  const handlePrint = () => {
+    const printContent = printRef.current;
+    if (!printContent) return;
+
+    const win = window.open('', '', 'width=900,height=650');
+    if (!win) return;
+
+    win.document.write(`
+      <!DOCTYPE html>
+      <html dir="ltr">
+        <head>
+          <meta charset="utf-8">
+          <title>تقرير العملية - ${data?.patient_name}</title>
+          <script src="https://cdn.tailwindcss.com"></script>
+          <style>
+            body { font-family: 'Cairo', sans-serif; padding: 40px; background: white; color: black; }
+            @page { size: A4; margin: 15mm; }
+            .print-title { font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 30px; color: #1d4ed8; }
+          </style>
+        </head>
+        <body>
+          ${printContent.innerHTML}
+        </body>
+      </html>
+    `);
+
+    win.document.close();
+    win.focus();
+
+    setTimeout(() => {
+      win.print();
+      win.close();
+    }, 500);
+  };
   useEffect(() => setEndpoint('notes'), []);
   return (
-    <section className="flex flex-col gap-2">
+    <section ref={printRef}
+    className="flex flex-col gap-2 ">
+      <div onClick={handlePrint} className=' absolute top-3 left-3 cursor-pointer' title='print' >
+        <div className='flex items-center gap-x-10 bg-blue-600 px-3 py-1 rounded-md'>
+        <p className='ms-7'>Print report</p>
+        <Printer  className='absolute w-5 h-5 '/>
+        </div>
+      </div>
       {/* Personal Information */}
       <div className="personalInfo flex flex-col gap-2">
         <h3 className="title font-bold text-[20px] text-black dark:text-white">

@@ -69,7 +69,7 @@ export const CustomDetails = React.memo(
 
     return (
       <div className="fixed flex justify-center items-center top-0 left-0 backdrop-blur-sm right-0 bottom-0 h-screen w-screen z-50">
-        <div className="overflow-y-auto w-full min-h-[200px] max-h-[80vh] sm:w-[70%]  rounded-md p-3 bg-white dark:bg-slate-800 shadow-[0px_0px_90px] dark:shadow-[0px_0px_5px] shadow-secondary dark:shadow-slate-500 grid grid-rows-[auto_1fr] gap-3 mx-2">
+        <div className="overflow-y-auto w-full min-h-[200px] max-h-[80vh] sm:w-[70%] relative rounded-md p-3 bg-white dark:bg-slate-800 shadow-[0px_0px_90px] dark:shadow-[0px_0px_5px] shadow-secondary dark:shadow-slate-500 grid grid-rows-[auto_1fr] gap-3 mx-2">
           <div className="close flex justify-end">
             <span
               onClick={() => setIsView(false)}
