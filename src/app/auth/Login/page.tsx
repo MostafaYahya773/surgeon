@@ -31,21 +31,21 @@ export default function Login() {
       .required('Email is required')
       .matches(
         /^(?!.*<script)(?!.*<\/)(?!.*<[^>]+>)(?!.*javascript:).*$/,
-        'Invalid characters'
+        'Invalid characters',
       ),
 
     password: Yup.string()
       .required('Password is required')
       .matches(
         /^(?!.*<script)(?!.*<\/)(?!.*<[^>]+>)(?!.*javascript:).*$/,
-        'Invalid characters'
+        'Invalid characters',
       ),
   });
 
   const formik = useFormik<Auth>({
     initialValues: {
-      email: '',
-      password: '',
+      email: 'test123@gmail.com',
+      password: 'Test12345',
     },
     validationSchema,
     validateOnChange: true,
@@ -82,7 +82,7 @@ export default function Login() {
                 className="text-blue-600 dark:text-white text-[15px] border dark:border-slate-600 border-slate-300 hover:bg-slate-200 py-[2px] px-5 rounded-lg dark:hover:bg-slate-700 dark:hover:text-blue-400 transition-all duration-300"
               >
                 Register
-              </Link> 
+              </Link>
             </div>
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">
@@ -129,24 +129,13 @@ export default function Login() {
                   disabled={formik.isSubmitting}
                   className="w-full p-2 bg-blue-500 rounded-lg mt-2 text-white hover:bg-blue-400 disabled:opacity-50"
                 >
-                  {formik.isSubmitting ? <LoadingSave /> : 'Login'}
+                  {formik.isSubmitting ?
+                    <LoadingSave />
+                  : 'Login'}
                 </button>
               </form>
             </div>
           </div>
-        </div>
-        {/* demo account */}
-        <div className="bg-white dark:bg-slate-700 w-fit mx-auto h-fit p-2 rounded-lg">
-          <p className="dark:text-blue-500">
-            DemoEmail :{' '}
-            <span className="text-secondary text-[14px]">
-              test123@gmail.com
-            </span>
-          </p>
-          <p className="dark:text-blue-500">
-            Password :{' '}
-            <span className="text-secondary text-[14px]">Test12345</span>
-          </p>
         </div>
       </div>
     </div>
