@@ -1,4 +1,5 @@
 'use client';
+
 import { Mail, Lock } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,9 +8,15 @@ import * as Yup from 'yup';
 import { useLogin } from '@/hooks/useLogIn';
 import toast from 'react-hot-toast';
 import LoadingSave from '@/app/_components/LoadingSave/LoadingSave';
-import { Auth } from '../../../interfaces/index';
+
+interface LoginValues {
+  email: string;
+  password: string;
+}
+
 export default function Login() {
   const { mutate: login } = useLogin();
+
   const LoginInputs = [
     {
       placeHolder: 'Email',
@@ -25,7 +32,7 @@ export default function Login() {
     },
   ];
 
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object({
     email: Yup.string()
       .email('Invalid email format')
       .required('Email is required')
@@ -42,7 +49,7 @@ export default function Login() {
       ),
   });
 
-  const formik = useFormik<Auth>({
+  const formik = useFormik<LoginValues>({
     initialValues: {
       email: 'test123@gmail.com',
       password: 'Test12345',
@@ -58,7 +65,7 @@ export default function Login() {
           setSubmitting(false);
         },
         onError: () => {
-          toast.error('password or email is incorrect');
+          toast.error('Password or email is incorrect');
           setSubmitting(false);
         },
       });
@@ -77,6 +84,7 @@ export default function Login() {
                 width={25}
                 height={25}
               />
+
               <Link
                 href="/auth/SignUp"
                 className="text-blue-600 dark:text-white text-[15px] border dark:border-slate-600 border-slate-300 hover:bg-slate-200 py-[2px] px-5 rounded-lg dark:hover:bg-slate-700 dark:hover:text-blue-400 transition-all duration-300"
@@ -84,46 +92,54 @@ export default function Login() {
                 Register
               </Link>
             </div>
+
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">
                 <h3 className="text-2xl font-bold text-blue-400">
                   Log in To Your Account
                 </h3>
+
                 <p className="dark:text-secondary text-[14px]">
                   Login with your data that you entered during registration
                 </p>
               </div>
+
               <form onSubmit={formik.handleSubmit}>
                 <div className="flex flex-col gap-4">
-                  {LoginInputs.map((input, index) => (
-                    <div className="input relative" key={index}>
+                  {LoginInputs.map((input) => (
+                    <div className="relative" key={input.name}>
                       <input
                         className="w-full p-2 px-8 rounded-lg outline-none text-[15px] border dark:border-slate-700 focus:border-slate-400 dark:text-white dark:bg-slate-800"
                         type={input.type}
                         name={input.name}
                         placeholder={input.placeHolder}
-                        value={formik.values[input.name as keyof Auth]}
+                        value={formik.values[input.name as keyof LoginValues]}
                         onChange={formik.handleChange}
                       />
+
                       <span className="absolute left-0 top-1/4 px-2">
                         {input.icon}
                       </span>
-                      {formik.errors[input?.name as keyof Auth] &&
+
+                      {formik.errors[input.name as keyof LoginValues] &&
                         (formik.submitCount > 0 ||
-                          formik.values[input?.name as keyof Auth] !== '') && (
+                          formik.values[input.name as keyof LoginValues] !==
+                            '') && (
                           <div className="text-red-400 text-[14px] mt-1">
-                            {formik.errors[input?.name as keyof Auth]}
+                            {formik.errors[input.name as keyof LoginValues]}
                           </div>
                         )}
                     </div>
                   ))}
+
                   <Link
-                    className=" w-fit text-blue-400 text-[14px] px-2 hover:underline ms-auto"
+                    className="w-fit text-blue-400 text-[14px] px-2 hover:underline ms-auto"
                     href="/auth/ConfirmEmail"
                   >
                     Forget password?
                   </Link>
                 </div>
+
                 <button
                   type="submit"
                   disabled={formik.isSubmitting}

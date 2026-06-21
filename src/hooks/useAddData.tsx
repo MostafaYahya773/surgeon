@@ -1,6 +1,6 @@
 'use client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createClient } from '../utils/supabase/client';
+import { createClient } from '../../lib/supabase/client';
 export function useAddData(endPoint: string) {
   const queryClient = useQueryClient();
   const addData = async (values: any) => {

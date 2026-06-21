@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { createClient } from '../utils/supabase/client';
+import { createClient } from '../../lib/supabase/client';
 
 export function useSelectDataById(dataId: string, endPoint: string) {
   const fetchManualReport = async () => {

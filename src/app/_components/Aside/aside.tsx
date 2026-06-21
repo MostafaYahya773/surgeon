@@ -12,7 +12,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { createClient } from '../../../utils/supabase/client';
+import { createClient } from '../../../../lib/supabase/client';
 export default function Aside() {
   const [isHover, setIsHover] = useState<boolean>(false);
   const links: Links[] = [
@@ -51,7 +51,7 @@ export default function Aside() {
     window.location.href = '/auth/Login';
   };
   return (
-    <section className="fixed min-h-screen bg-blue-600 dark:bg-slate-800 w-fit pt-2 z-50">
+    <section className="min-h-screen fixed left-48 bg-blue-600 dark:bg-slate-800 w-fit  z-50">
       <div className="flex flex-col gap-y-5 h-screen justify-between">
         <div className="flex flex-col gap-y-5">
           <Link
@@ -93,9 +93,9 @@ export default function Aside() {
                     </span>
                     <p
                       className={`${
-                        isHovered === link.name
-                          ? 'block absolute top-0 left-12'
-                          : 'hidden'
+                        isHovered === link.name ?
+                          'block absolute top-0 left-12'
+                        : 'hidden'
                       } bg-blue-100 text-blue-600 dark:text-white dark:bg-slate-700 rounded-lg py-1 w-[100px] text-center text-[14px] shadow-md`}
                     >
                       {link.name}

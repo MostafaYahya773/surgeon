@@ -38,7 +38,7 @@ const OperationAnalysesComponent = dynamic(
   () => import('../OperationAnlaysesComponent/operationAnlaysesComponent'),
   {
     ssr: false,
-  }
+  },
 );
 const ComposedCharts = dynamic(() => import('../Charts/ComposedChart'), {
   ssr: false,
@@ -74,31 +74,31 @@ export default function OperationAnlayses({
     age_over_50,
   } = useMemo(() => {
     const filterElective = notes?.filter(
-      (item: any) => item?.operation_status === 'Elective'
+      (item: any) => item?.operation_status === 'Elective',
     ).length;
 
     const filterEmergency = notes?.filter(
-      (item: any) => item?.operation_status === 'Emergency'
+      (item: any) => item?.operation_status === 'Emergency',
     ).length;
 
     const genderMale = notes?.filter(
-      (item: any) => item?.gender === 'Male'
+      (item: any) => item?.gender === 'Male',
     ).length;
     const genderFemale = notes?.filter(
-      (item: any) => item?.gender === 'Female'
+      (item: any) => item?.gender === 'Female',
     ).length;
 
     const age_under_20 = notes?.filter(
-      (item: any) => item?.patient_age <= 20
+      (item: any) => item?.patient_age <= 20,
     ).length;
     const age_20_to_35 = notes?.filter(
-      (item: any) => item?.patient_age > 20 && item?.patient_age <= 35
+      (item: any) => item?.patient_age > 20 && item?.patient_age <= 35,
     ).length;
     const age_36_to_50 = notes?.filter(
-      (item: any) => item?.patient_age > 35 && item?.patient_age <= 50
+      (item: any) => item?.patient_age > 35 && item?.patient_age <= 50,
     ).length;
     const age_over_50 = notes?.filter(
-      (item: any) => item?.patient_age > 50
+      (item: any) => item?.patient_age > 50,
     ).length;
     return {
       filterElective,
@@ -269,11 +269,11 @@ export default function OperationAnlayses({
 
   return (
     <section
-      className={`home mr-[312px] ${
-        path === '/home' ? 'grid grid-cols-[1fr_auto] relative' : ''
+      className={`home ${
+        path === '/home' ? 'grid grid-cols-[1fr_auto] gap-5 relative ' : ''
       } `}
     >
-      <div className="flex flex-col gap-5 w-full rounded-md p-2 ">
+      <div className="flex flex-col gap-5 w-full rounded-md overflow-y-scroll">
         <div className="calemder__ui">
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-2 ">
             <div className="w-full h-full order-2 lg:order-1 rounded-lg bg-white dark:bg-slate-800 min-h-[300px]">
@@ -375,7 +375,7 @@ export default function OperationAnlayses({
         </div>
       </div>
 
-      <div className="shorts grid grid-rows-[auto_auto_auto] gap-2 min-h-screen fixed right-0 top-0 p-2 ">
+      <div className="shorts flex flex-col gap-5">
         <div className="doctor__Cart">
           <DoctorCart doctorDetails={doctorDetails} />
         </div>
