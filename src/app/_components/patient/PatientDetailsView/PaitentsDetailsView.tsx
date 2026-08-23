@@ -4,16 +4,23 @@ import { GlobalContext } from '@/context/global';
 import { useSelectDataById } from '@/hooks/useSelectDataById';
 import { Printer } from 'lucide-react';
 import { useRef } from 'react';
+
 export default function PaitentsDetailsView() {
   const { id, endpoint, setEndpoint } = useContext(GlobalContext);
   const { data } = useSelectDataById(id, endpoint);
   const printRef = useRef<HTMLDivElement>(null);
+
   const handlePrint = () => {
     const printContent = printRef.current;
     if (!printContent) return;
 
     const win = window.open('', '', 'width=900,height=650');
-    if (!win) return;
+    if (!win) {
+      alert(
+        'فضلاً اسمح بالنوافذ المنبثقة (Popups) من إعدادات المتصفح عشان تقدر تطبع التقرير.',
+      );
+      return;
+    }
 
     win.document.write(`
       <!DOCTYPE html>
@@ -21,7 +28,7 @@ export default function PaitentsDetailsView() {
         <head>
           <meta charset="utf-8">
           <title>تقرير العملية - ${data?.patient_name}</title>
-          <script src="https://cdn.tailwindcss.com"></script>
+          <script src="https://cdn.tailwindcss.com" onload="window.__tailwindReady = true"></script>
           <style>
             body { font-family: 'Cairo', sans-serif; padding: 40px; background: white; color: black; }
             @page { size: A4; margin: 15mm; }
@@ -37,21 +44,44 @@ export default function PaitentsDetailsView() {
     win.document.close();
     win.focus();
 
-    setTimeout(() => {
+    // ننتظر Tailwind فعليًا يتحمل بدل ما نعتمد على وقت ثابت
+    let printed = false;
+    const doPrint = () => {
+      if (printed || win.closed) return;
+      printed = true;
       win.print();
       win.close();
-    }, 500);
+    };
+
+    const waitForTailwind = setInterval(() => {
+      if ((win as any).__tailwindReady) {
+        clearInterval(waitForTailwind);
+        doPrint();
+      }
+    }, 50);
+
+    // خط أمان: لو Tailwind اتأخر أو فشل يتحمل (مشكلة شبكة/CSP)، اطبع برضه بعد 3 ثواني
+    setTimeout(() => {
+      clearInterval(waitForTailwind);
+      doPrint();
+    }, 3000);
   };
+
   useEffect(() => setEndpoint('notes'), []);
+
   return (
-    <section ref={printRef}
-    className="flex flex-col gap-2 ">
-      <div onClick={handlePrint} className=' absolute top-3 left-3 cursor-pointer' title='print' >
-        <div className='flex items-center gap-x-10 bg-blue-600 px-3 py-1 rounded-md'>
-        <p className='ms-7'>Print report</p>
-        <Printer  className='absolute w-5 h-5 '/>
+    <section ref={printRef} className="flex flex-col gap-2 ">
+      <div
+        onClick={handlePrint}
+        className=" absolute top-3 left-3 cursor-pointer"
+        title="print"
+      >
+        <div className="flex items-center gap-x-10 bg-blue-600 px-3 py-1 rounded-md">
+          <p className="ms-7">Print report</p>
+          <Printer className="absolute w-5 h-5 " />
         </div>
       </div>
+
       {/* Personal Information */}
       <div className="personalInfo flex flex-col gap-2">
         <h3 className="title font-bold text-[20px] text-black dark:text-white">
@@ -104,9 +134,9 @@ export default function PaitentsDetailsView() {
               Operation Time
             </span>
             <p className="text-[14px] px-1">
-              {data?.created_at.slice(11, 16) > '12:00'
-                ? `${data?.created_at.slice(11, 16)} PM`
-                : `${data?.created_at.slice(11, 16)} AM`}
+              {data?.created_at.slice(11, 16) > '12:00' ?
+                `${data?.created_at.slice(11, 16)} PM`
+              : `${data?.created_at.slice(11, 16)} AM`}
             </p>
           </div>
           <div className="operation_name flex flex-col gap-1">
